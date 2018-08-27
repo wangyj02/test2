@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.min.js"></script>
+
+    <title></title>
+    <style>
+        .table-content {
+            width: 80%;
+            padding-top: 30px;
+            margin: 0 auto;
+        }
+
+        .table-content table td {
+            text-align: center;
+        }
+
+        .remarks {
+            text-align: left !important;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <div id="myChart" :style="{ height: '300px'}"></div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                monthdata: [], //月报表数据
+                pollutantdata: [], //污染源数据
+                chartlist: []
+            };
+        },
+        mounted() {
+            this.drawLine();
+            this.getMonthData();
+            this.getPollutant();
+        },
+        methods: {
+            setChart() {
+                    this.chartlist.push(this.formatchart())
+            },
+            formatchart(pollItem){
+                var chartdata = {};
+        this.pollutantdata.map((pollItem) => {
+                this.monthdata.map((monthItem) => {
+                    let avg=eval('P'+pollItem.PollutantNo+'AvgValue')
+                   chartdata[name] = pollItem.PollutantName;
+                   // chartdata[value] = monthItem.avg;
+                  // chartdata[time] = monthItem.GainTime;
+                 console.log(pollItem.PollutantName)
+
+            });
+            });
+                return chartdata;
+            },
+
+            getPollutant() {
+                axios.post("json/Pollutant.json")
+                    .then(response => {
+                    // console.log(JSON.stringify(response.data.Data))
+                    this.pollutantdata = response.data.Data;
+                this.setChart();
+            })
+            .catch(error => {
+                    return [];
+            });
+            },
+            getMonthData() {
+                axios.post("json/MonthData.json")
+                    .then(response => {
+
+                    this.monthdata = response.data.Data;
+                console.log(this.monthdata)
+                // alert(this.pollutantdata.PollutantName)
+
+                this.setChart();
+            })
+            .catch(error => {
+                    return [];
+            });
+            },
+            drawLine() {
+                let myChart = echarts.init(document.getElementById("myChart"));
+                myChart.setOption({
+                    title: {
+                        text: ""
+                    },
+                    tooltip: {
+                        trigger: "axis"
+                    },
+                    legend: {
+                        data: []
+                    },
+                    grid: {
+                        left: "3%",
+                        right: "4%",
+                        bottom: "3%",
+                        containLabel: true
+                    },
+                    toolbox: {},
+                    xAxis: {
+                        type: "category",
+                        splitLine: { show: true },
+                        axisLine: {
+                            lineStyle: { color: "#cfcfcf" }
+                        },
+                        axisLabel: {
+                            color: "#333"
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 70,
+                        axisLine: {
+                            lineStyle: { color: "#cfcfcf" }
+                        },
+                        axisLabel: {
+                            color: "#333"
+                        }
+                    },
+                    series: [
+                        {
+                            name: "",
+                            type: "line",
+                            stack: "总量",
+                            data: []
+                        }
+                        /*   {
+                         name:'PH',
+                         type:'line',
+                         stack: '总量',
+                         data:[["08月01日",10],["08月02日",50], ["08月03日",30], ["08月04日",20], ["08月05日",35],  ["08月06日",25],  ["08月07日",17],["08月08日",50]]
+                         },
+                         {
+                         name:'氨氮',
+                         type:'line',
+                         stack: '总量',
+                         data:[["08月01日",30],["08月02日",23], ["08月03日",15], ["08月04日",20], ["08月05日",33],  ["08月06日",52],  ["08月07日",31],["08月08日",30]]
+                         },
+                         {
+                         name:'总磷',
+                         type:'line',
+                         stack: '总量',
+                         data:[["08月01日",50],["08月02日",20], ["08月03日",15], ["08月04日",25], ["08月05日",30],  ["08月06日",22],  ["08月07日",21],["08月08日",60]]
+                         },
+                         {
+                         name:'流量',
+                         type:'line',
+                         stack: '总量',
+                         data:[["08月01日",40],["08月02日",30], ["08月03日",10], ["08月04日",60], ["08月05日",20],  ["08月06日",42],  ["08月07日",41],["08月08日",55]]
+                         } */
+                    ]
+                });
+                window.onresize = function() {
+                    myChart.resize();
+                };
+            }
+        }
+    })
+</script>
+
+</body>
+
+
+</html>

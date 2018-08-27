@@ -1,0 +1,43 @@
+{
+    "Data": [{
+        "PollutantNo": 1,
+        "PollutantName": "化学需氧量",
+        "PollutantExplain": "011",
+        "CalculateUnit": 2,
+        "PollCodeType": 2,
+        "Unit": "毫克/升",
+        "CountUnit": ""
+    }, {
+        "PollutantNo": 2,
+        "PollutantName": "PH",
+        "PollutantExplain": "001",
+        "CalculateUnit": 0,
+        "PollCodeType": 3,
+        "Unit": null,
+        "CountUnit": ""
+    }, {
+        "PollutantNo": 5,
+        "PollutantName": "氨氮",
+        "PollutantExplain": "060",
+        "CalculateUnit": 2,
+        "PollCodeType": 2,
+        "Unit": "毫克/升",
+        "CountUnit": ""
+    }, {
+        "PollutantNo": 6,
+        "PollutantName": "总磷",
+        "PollutantExplain": "101",
+        "CalculateUnit": 2,
+        "PollCodeType": 2,
+        "Unit": "毫克/升",
+        "CountUnit": ""
+    }, {
+        "PollutantNo": 900,
+        "PollutantName": "流量",
+        "PollutantExplain": "B01",
+        "CalculateUnit": 1,
+        "PollCodeType": 1,
+        "Unit": "升/秒",
+        "CountUnit": ""
+    }]
+}
